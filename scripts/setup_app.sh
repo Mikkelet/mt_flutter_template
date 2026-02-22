@@ -1,0 +1,1 @@
+dart scripts/init/setup_project.dart
