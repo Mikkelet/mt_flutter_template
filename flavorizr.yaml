@@ -1,0 +1,23 @@
+flavors:
+  develop:
+    app:
+      name: "My Example app"
+    android:
+      applicationId: "com.example.app.dev"
+      firebase:
+        config: ".firebase/develop/google-services.json"
+    ios:
+      bundleId: "com.example.app.dev"
+      firebase:
+        config: ".firebase/develop/GoogleService-Info.plist"
+  production:
+    app:
+      name: "My Example app"
+    android:
+      applicationId: "com.example.app"
+      firebase:
+        config: ".firebase/production/google-services.json"
+    ios:
+      bundleId: "com.example.app"
+      firebase:
+        config: ".firebase/production/GoogleService-Info.plist"
