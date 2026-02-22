@@ -1,7 +1,7 @@
 flavors:
   develop:
     app:
-      name: "My Example app"
+      name: "My Example app [DEV]"
     android:
       applicationId: "com.example.app.dev"
       firebase:
