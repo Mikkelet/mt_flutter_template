@@ -11,6 +11,10 @@ void main(List<String> args) async {
   if (input.toLowerCase() == "y") {
     final libPath = Directory("./lib/");
     await _findFiles(libPath, lastNonEmpty);
+    final testPath = Directory("./test/");
+    await _findFiles(testPath, lastNonEmpty);
+    final pubSpecFile = File("pubspec.yaml");
+    await _updatePackageName(pubSpecFile.uri, lastNonEmpty);
   }
 }
 
