@@ -31,6 +31,7 @@ Future<void> _findFiles(Directory root, String packageName) async {
   for (final file in list) {
     final uri = file.uri.toString();
     if (uri.startsWith("lib/_")) continue;
+    if (uri.startsWith("lib/.")) continue;
     if (uri.endsWith("/")) continue;
     await _updatePackageName(file.uri, packageName);
   }

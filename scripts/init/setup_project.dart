@@ -24,18 +24,24 @@ void main(List<String> args) async {
   print("Bundle identifier:\t$bundleId");
   print("Package name:\t\t$packageName");
   print("Confirm? [y/N]");
-  final confirmInput = stdin.readLineSync() ?? "";
+  final confirmInput = getInput();
   if (confirmInput.toLowerCase() == "y") {
     await updatePackageName();
     await updateFlavorizr(appName, bundleId);
   }
 
-  print("Run generator and flavorizr now? [y/N]");
-  final confirmInit = stdin.readLineSync() ?? "";
-  if (confirmInit.toLowerCase() == "y") {
+  print("Run generator and flavorizr now? [Y/n]");
+  final confirmInit = getInput();
+  if (confirmInit.toLowerCase() != "n") {
     await Process.run("sh", ["scripts/gen.sh"]);
     await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr"]);
   }
+}
+
+String getInput() {
+  final input = stdin.readLineSync() ?? "";
+  if (input.isEmpty) return getInput();
+  return input;
 }
 
 Future<String> getAppName() async {
