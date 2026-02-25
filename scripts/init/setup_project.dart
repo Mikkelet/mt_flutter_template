@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:change_case/change_case.dart';
-
 import 'update_bundle_id.dart';
 import 'update_package_name.dart';
 
@@ -21,27 +19,33 @@ void main(List<String> args) async {
   final packageName = await getPackageName();
   print("Confirm registered data:");
   print("App name:\t\t$appName");
-  print("Bundle identifier:\t$bundleId");
+  print("Bundle identifier:\t$bundleId.$packageName");
   print("Package name:\t\t$packageName");
-  print("Confirm? [y/N]");
-  final confirmInput = getInput();
-  if (confirmInput.toLowerCase() == "y") {
+  print("Confirm? [Y/n]");
+  final confirmInput = stdin.readLineSync() ?? "y";
+  if (confirmInput.toLowerCase() != "n") {
+    print("Yes");
+    await Process.run("fvm", [
+      "flutter",
+      "create",
+      "--platforms=android,ios",
+      "--org",
+      bundleId,
+      "--project-name",
+      packageName,
+      "."
+    ]);
     await updatePackageName();
     await updateFlavorizr(appName, bundleId);
   }
 
   print("Run generator and flavorizr now? [Y/n]");
-  final confirmInit = getInput();
-  if (confirmInit.toLowerCase() != "n") {
+  final confirmInit = stdin.readLineSync() ?? "y";
+  if (confirmInit.toLowerCase() == "y") {
+    print("Yes");
     await Process.run("sh", ["scripts/gen.sh"]);
     await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr"]);
   }
-}
-
-String getInput() {
-  final input = stdin.readLineSync() ?? "";
-  if (input.isEmpty) return getInput();
-  return input;
 }
 
 Future<String> getAppName() async {
@@ -56,10 +60,10 @@ Future<String> getAppName() async {
 }
 
 Future<String> getBundleId() async {
-  print("Please enter your app's bundle id (eg. com.coolcompany.myapp");
+  print("Please enter your organization identifier (eg. com.coolcompany");
   print("The project's flavors will be updated to:");
-  print("- \"develop: com.coolcompany.myapp.dev\"");
-  print("- \"production: com.coolcompany.myapp\"");
+  print("- \"develop: com.coolcompany.{package_name}.dev\"");
+  print("- \"production: com.coolcompany.{package_name}\"");
   final bundleId = stdin.readLineSync() ?? "";
   await Future.delayed(Duration(milliseconds: 200));
   if (bundleId.isEmpty) return getBundleId();
