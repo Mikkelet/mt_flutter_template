@@ -15,6 +15,8 @@ Future<void> main(List<String> args) async {
   final appName = results.option("appName");
   final package = results.option("package");
 
+  print("appName=$appName, package=$package");
+
   final (org, packageName) = parsePackage(package!.toSnakeCase());
   print(
     """
