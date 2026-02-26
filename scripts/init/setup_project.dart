@@ -28,9 +28,8 @@ Future<void> main(List<String> args) async {
         .trim(),
   );
   await Future.delayed(Duration(milliseconds: 500));
-  print("Confirm registered data:");
   print("App name:\t\t$appName");
-  print("Bundle identifier:\t$package.$packageName");
+  print("Bundle identifier:\t$org.$packageName");
   print("Package name:\t\t$packageName");
   await Future.delayed(Duration(milliseconds: 500));
   await Process.run("fvm", [
@@ -44,7 +43,7 @@ Future<void> main(List<String> args) async {
     ".",
   ]);
   await updatePackageName();
-  await updateFlavorizr(appName!, packageName);
+  await updateFlavorizr(appName!, package);
   await Process.run("sh", ["scripts/gen.sh"]);
   await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr"]);
 }
