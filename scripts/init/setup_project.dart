@@ -17,7 +17,7 @@ Future<void> main(List<String> args) async {
 
   print("appName=$appName, package=$package");
 
-  final (org, packageName) = parsePackage(package!.toSnakeCase());
+  final (org, packageName) = parsePackage(package!);
   print(
     """
     
@@ -52,5 +52,5 @@ Future<void> main(List<String> args) async {
 (String, String) parsePackage(String package) {
   final split = package.split(".");
   final org = split.take(split.length - 1).reduce((a, b) => "$a.$b");
-  return (org, split.last);
+  return (org, split.last.toSnakeCase());
 }
