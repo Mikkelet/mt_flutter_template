@@ -45,7 +45,7 @@ Future<void> main(List<String> args) async {
   await updatePackageName();
   await updateFlavorizr(appName!, package);
   await Process.run("sh", ["scripts/gen.sh"]);
-  await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr"]);
+  await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr", "-f"]);
 }
 
 (String, String) parsePackage(String package) {
