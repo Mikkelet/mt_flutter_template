@@ -45,7 +45,14 @@ Future<void> main(List<String> args) async {
   await updatePackageName();
   await updateFlavorizr(appName!, package);
   await Process.run("sh", ["scripts/gen.sh"]);
-  await Process.run("fvm", ["dart", "pub", "run", "flutter_flavorizr", "-f"]);
+  await Process.run("fvm", [
+    "dart",
+    "pub",
+    "run",
+    "flutter_flavorizr",
+    "-f",
+    "-p assets:download,assets:extract,android:androidManifest,android:flavorizrGradle,android:buildGradle,android:dummyAssets,android:icons,flutter:flavors,flutter:app,flutter:pages,flutter:main,ios:podfile,ios:xcconfig,ios:buildTargets,ios:schema,ios:dummyAssets,ios:icons,ios:plist,ios:launchScreen,macos:podfile,macos:xcconfig,macos:configs,macos:buildTargets,macos:schema,macos:dummyAssets,macos:icons,macos:plist,google:firebase,assets:clean,ide:config,",
+  ]);
 }
 
 (String, String) parsePackage(String package) {
