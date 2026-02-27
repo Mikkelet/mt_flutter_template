@@ -47,7 +47,6 @@ Future<void> main(List<String> args) async {
   await Process.run("sh", ["scripts/gen.sh"]);
   await Process.run("fvm", [
     "dart",
-    "pub",
     "run",
     "flutter_flavorizr",
     "-f",
